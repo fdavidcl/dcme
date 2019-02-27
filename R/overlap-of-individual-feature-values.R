@@ -17,16 +17,16 @@ F1 <- function(x, y){
     stop("Data must have (only) 2 classes.", call. = FALSE)
   }
 
-  means_and_sds <- vector("list", length = length(x_groups))
-  for (i in seq_along(x_groups)){
-    means_and_sds[[i]] <- vapply(x_groups[[i]],
-                                 function(x) c(mean = mean(x, na.rm = TRUE),
-                                               sd = sd(x, na.rm = TRUE)),
-                                 numeric(2))
-  }
+  means_and_sds <- lapply(x_groups, function(g) {
+    vapply(g,
+           function(x)
+             c(mean = mean(x, na.rm = TRUE),
+               var = var(x, na.rm = TRUE)),
+           numeric(2))
+  })
 
   a <- (means_and_sds[[1]]["mean", ] - means_and_sds[[2]]["mean", ]) ^ 2
-  b <- means_and_sds[[1]]["sd", ] ^ 2 + means_and_sds[[2]]["sd", ] ^ 2
+  b <- means_and_sds[[1]]["var", ] + means_and_sds[[2]]["var", ]
   max(a / b)
 }
 
@@ -65,4 +65,39 @@ F2 <- function(x, y){
   }
 
   prod(f2)
+}
+
+#' Maximum Individual Feature Efficiency (F3)
+#'
+#' @inheritParams F1
+#' @return The maximum individual efficiency of each feature in separating the classes.
+#' @export
+
+F3 <- function(x, y) {
+  if (!is.data.frame(x)) x <- as.data.frame(x)
+
+  x_groups <- split(x, y)
+  if (length(x_groups) != 2){
+    stop("Data must have (only) 2 classes.", call. = FALSE)
+  }
+
+  maxs_and_mins <- vector("list", length = length(x_groups))
+  for (i in seq_along(x_groups)){
+    maxs_and_mins[[i]] <- vapply(x_groups[[i]],
+                                 function(x) c(max = max(x, na.rm = TRUE),
+                                               min = min(x, na.rm = TRUE)),
+                                 numeric(2))
+  }
+
+  num_features <- ncol(x)
+  num_examples <- nrow(x)
+  f3 <- vector("numeric", length = num_features)
+  for (i in seq_len(num_features)) {
+    above <- x[, i] > max(maxs_and_mins[[1]]["min", i], maxs_and_mins[[2]]["min", i])
+    below <- x[, i] < min(maxs_and_mins[[1]]["max", i], maxs_and_mins[[2]]["max", i])
+    f3[i] <- 1 - sum(above & below) / num_examples
+  }
+
+
+  max(f3)
 }
