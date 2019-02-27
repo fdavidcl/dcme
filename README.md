@@ -4,11 +4,11 @@ The `dcme` package provides functions to compute data complexity measures.
 
 ## Installation
 `dcme` is under development and not yet available on CRAN. You can install the
-development version using the `devtools` package as follows:
+development version using the `remotes` package as follows:
 
 ```r
-# install.packages("devtools")
-devtools::install_github("RomeroBarata/dcme")
+# install.packages("remotes")
+remotes::install_github("fdavidcl/dcme")
 ```
 
 ## Data Complexity Measures
@@ -39,9 +39,10 @@ The following complexity measures are currently implemented:
 ### Measures of Overlap of Individual Feature Values
 - `F1`: Fisher's Discriminant Ratio
 - `F2`: Volume of Overlap Region
+- `F3`: Maximum Individual Feature Efficiency
 
-Unfortunately the `F1` and `F2` measures are implemented only for binary data
-sets. General versions will be made available soon.
+Unfortunately these measures are implemented only for binary data
+sets. 
 
 ### Measures of Separability of Classes
 - `N2`: Ratio of Average Intra/Inter Class 1-NN Distance
@@ -61,3 +62,5 @@ learning, neural and statistical classification**.
 [2] Ho, T. K., & Basu, M. (2002). **Complexity measures of supervised
 classification problems**. _IEEE transactions on pattern analysis and machine
 intelligence, 24_(3), 289-300.
+
+[3] [Lorena, A. C., Garcia, L. P. F., Lehmann, J., Souto, M. C. P., Ho, T. K. (2018) **How Complex is your classification problem? A survey on measuring classification complexity**. arXiv:1808.03591](https://arxiv.org/abs/1808.03591).
