@@ -7,6 +7,7 @@
 #' @param y A vector (or factor) determining the class of each example in
 #'  the data.
 #' @return The Fisher's Discriminant Ratio of a binary data set.
+#' @import stats
 #' @export
 
 F1 <- function(x, y){

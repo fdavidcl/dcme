@@ -18,6 +18,7 @@ T2 <- function(x){
 #'
 #' @inheritParams F1
 #' @return The PCA dimension.
+#' @import stats
 
 pca_dimension <- function(x) {
   pca <- prcomp(x)

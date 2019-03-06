@@ -5,6 +5,7 @@
 #'
 #' @inheritParams F1
 #' @return The geometric mean ratio of standard deviations.
+#' @import stats
 #' @export
 
 sd_ratio <- function(x, y){
@@ -48,6 +49,7 @@ sd_ratio <- function(x, y){
 #'
 #' @inheritParams F1
 #' @return The mean absolute correlation coefficient of the input data set.
+#' @import stats
 #' @export
 
 corr_abs <- function(x, y){
